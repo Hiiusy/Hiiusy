@@ -16,131 +16,147 @@
         min-height: 100vh;
         margin: 0;
         padding: 20px;
+        overflow: hidden;
+        cursor: default;
     }
 
-    /* Hiệu ứng xoay tròn */
+    .cursor-glow {
+        position: fixed;
+        top: 0; left: 0;
+        width: 400px; 
+        height: 400px;
+        background: radial-gradient(circle, rgba(28, 176, 246, 0.15) 0%, rgba(28, 176, 246, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        mix-blend-mode: screen;
+        transition: width 0.2s, height 0.2s;
+    }
+
     @keyframes rotate-light {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
 
-    /* --- THẺ CHÍNH --- */
     .card-container {
-        background-color: #202f36; 
+        position: relative;
+        background: transparent;
         border-radius: 20px;
         padding: 40px;
         text-align: center;
         width: 320px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        z-index: 10;
+        overflow: hidden;
+        backdrop-filter: blur(5px);
     }
 
-    /* --- CÁC PHẦN TỬ TIÊU ĐỀ --- */
-    .header-icon {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 10px;
-    }
-    
-    h1 {
-        color: #ffffff;
-        font-size: 24px;
-        margin: 0 0 5px 0;
-        font-weight: 800;
-    }
-
-    p.subtitle {
-        color: #777777;
-        margin: 0 0 30px 0;
-        font-size: 15px;
-        font-weight: 700;
-    }
-
-    /* --- NÚT BẤM CHỨA QR --- */
-    .super-button {
-        position: relative; 
-        display: block;
-        background: transparent; 
-        border-radius: 16px;
-        padding: 20px;
-        text-decoration: none;
-        color: #ffffff; /* Đổi màu chữ thành Trắng cho nổi trên nền Xanh */
-        transition: all 0.2s ease;
-        top: 0;
-        cursor: pointer;
-        z-index: 1; 
-        overflow: hidden; 
-    }
-
-    /* Lớp giả 1: Viền sáng xoay tròn */
-    .super-button::before {
+    .card-container::before {
         content: '';
         position: absolute;
         z-index: -2;
         top: -4px; right: -4px; bottom: -4px; left: -4px;
-        /* Dải màu ánh sáng: Trắng + Xanh Dương */
         background: conic-gradient(
             from 0deg,
             transparent 0%,
-            #ffffff 20%, /* Điểm sáng trắng */
-            #1cb0f6 30%, /* Điểm sáng Xanh Dương */
-            transparent 50%,
+            #ffffff 10%, 
+            #1cb0f6 25%, 
+            transparent 45%,
             transparent 100%
         );
-        animation: rotate-light 3s linear infinite;
-        border-radius: 20px; 
+        animation: rotate-light 5s linear infinite;
+        border-radius: 24px;
     }
 
-    /* Lớp giả 2: Nền nút màu xanh */
-    .super-button::after {
+    .card-container::after {
         content: '';
         position: absolute;
         z-index: -1;
         top: 0; right: 0; bottom: 0; left: 0;
-        background-color: #1cb0f6; /* Đổi nền nút thành Xanh Dương */
-        border-radius: 16px; 
+        background-color: #202f36;
+        border-radius: 20px; 
     }
 
-    .super-button:hover {
-        filter: brightness(1.1);
+    .header-icon {
+        width: 50px; height: 50px; margin-bottom: 10px; position: relative; z-index: 2;
+        filter: drop-shadow(0 0 5px rgba(28, 176, 246, 0.5));
+    }
+    
+    h1 {
+        color: #ffffff; font-size: 24px; margin: 0 0 5px 0; font-weight: 800; position: relative; z-index: 2;
     }
 
-    .super-button:active {
-        transform: scale(0.98);
+    p.subtitle {
+        color: #777777; margin: 0 0 30px 0; font-size: 15px; font-weight: 700; position: relative; z-index: 2;
     }
 
-    /* --- NỘI DUNG --- */
+    .super-button {
+        position: relative; 
+        display: block;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 20px;
+        text-decoration: none;
+        color: #ffffff;
+        transition: all 0.2s ease;
+        top: 0;
+        cursor: pointer;
+        z-index: 2; 
+        overflow: hidden; 
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .super-button::before {
+        content: ''; position: absolute; z-index: -2;
+        top: -50%; left: -50%; width: 200%; height: 200%;
+        background: conic-gradient(
+            from 0deg, transparent 0%, #ffffff 10%, #1cb0f6 30%, transparent 50%, transparent 100%
+        );
+        animation: rotate-light 3s linear infinite; 
+    }
+
+    .super-button::after {
+        content: ''; position: absolute; z-index: -1;
+        top: 2px; right: 2px; bottom: 2px; left: 2px;
+        background: rgba(28, 176, 246, 0.15);
+        border-radius: 14px;
+        backdrop-filter: blur(20px);
+    }
+
+    .super-button:hover { 
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 15px rgba(28, 176, 246, 0.4);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .super-button:active { transform: scale(0.98); }
+
     .button-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        font-weight: 800;
-        text-transform: uppercase;
-        margin-bottom: 15px;
-        letter-spacing: 0.8px;
-        position: relative;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Thêm bóng chữ nhẹ cho dễ đọc */
+        display: flex; align-items: center; justify-content: center;
+        font-size: 18px; font-weight: 800; text-transform: uppercase;
+        margin-bottom: 15px; letter-spacing: 0.8px; position: relative;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        z-index: 3;
     }
 
-    .icon-money {
-        margin-right: 8px;
-        font-size: 20px;
-    }
+    .icon-money { margin-right: 8px; font-size: 20px; }
 
     .qr-image {
-        width: 200px;
-        height: 200px;
-        border-radius: 12px;
-        background: white; 
-        padding: 10px; 
-        display: block;
-        margin: 0 auto;
-        box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); 
-        position: relative; 
+        width: 200px; height: 200px; border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px; display: block; margin: 0 auto;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        position: relative; z-index: 3;
     }
 </style>
 </head>
 <body>
+
+    <div class="cursor-glow" id="cursorGlow"></div>
 
     <div class="card-container">
         <svg class="header-icon" viewBox="0 0 24 24" fill="#1cb0f6" xmlns="http://www.w3.org/2000/svg">
@@ -160,6 +176,22 @@
                  class="qr-image">
         </div>
     </div>
+
+    <script>
+        const cursor = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.addEventListener('mousedown', () => {
+            cursor.style.width = '350px';
+            cursor.style.height = '350px';
+        });
+        document.addEventListener('mouseup', () => {
+            cursor.style.width = '400px';
+            cursor.style.height = '400px';
+        });
+    </script>
 
 </body>
 </html>
