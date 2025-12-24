@@ -16,283 +16,216 @@
         min-height: 100vh;
         margin: 0;
         padding: 20px;
-        overflow-y: auto; 
         overflow-x: hidden;
-        cursor: none; 
+        cursor: default;
+    }
+
+    #cursor-layer {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
     }
 
     .cursor-ring {
-        position: fixed; 
-        top: 0; left: 0;
-        width: 60px; height: 60px;
+        position: absolute;
+        width: 50px; height: 50px;
         border: 2px solid #1cb0f6;
         border-radius: 50%;
-        box-shadow: 0 0 10px #1cb0f6, 0 0 30px rgba(28, 176, 246, 0.4), inset 0 0 10px rgba(28, 176, 246, 0.2); 
-        pointer-events: none; 
-        z-index: 9999;
         transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s, background-color 0.2s, opacity 0.3s;
-        mix-blend-mode: screen;
-        will-change: transform;
-        opacity: 0;
+        transition: width 0.1s, height 0.1s;
+        box-shadow: 0 0 15px rgba(28, 176, 246, 0.5);
     }
 
     .cursor-dot {
-        position: fixed; 
-        top: 0; left: 0;
+        position: absolute;
         width: 8px; height: 8px;
-        background-color: white;
+        background: white;
         border-radius: 50%;
-        pointer-events: none;
-        z-index: 10000;
         transform: translate(-50%, -50%);
         box-shadow: 0 0 10px white;
-        opacity: 0;
-        transition: opacity 0.3s;
     }
 
-    @keyframes rotate-light {
+    @keyframes rotate-bg {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
 
     .card-container {
         position: relative;
-        background: transparent;
-        border-radius: 30px;
+        width: 380px;
         padding: 4px;
-        text-align: center;
-        width: 380px; 
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+        border-radius: 30px;
+        background: linear-gradient(#1a1a1a, #1a1a1a) padding-box,
+                    conic-gradient(from 0deg, transparent 0%, #1cb0f6 50%, transparent 100%) border-box;
+        border: 4px solid transparent;
+        box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         z-index: 10;
-        overflow: hidden;
-        transform: translateZ(0);
-        margin: 50px 0; 
     }
 
     .card-container::before {
         content: '';
         position: absolute;
-        top: -100%; left: -100%; width: 300%; height: 300%;
-        z-index: -2;
+        top: -50%; left: -50%; width: 200%; height: 200%;
         background: conic-gradient(transparent, transparent, transparent, #1cb0f6);
-        animation: rotate-light 4s linear infinite;
+        animation: rotate-bg 4s linear infinite;
+        z-index: -1;
+        opacity: 0.5;
+        border-radius: 40%;
     }
 
     .card-inner {
         background: #1a1a1a;
         border-radius: 26px;
-        padding: 45px 30px;
-        position: relative;
-        z-index: -1;
+        padding: 40px 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
     }
 
-    /* --- CSS CHO ICON KHIÊN ÁNH SÁNG MỚI --- */
-    @keyframes float-pulse {
+    .shield-container {
+        width: 100px; height: 100px;
+        margin-bottom: 20px;
+        display: flex; justify-content: center; align-items: center;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 30px rgba(28, 176, 246, 0.1);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-10px); }
     }
 
-    @keyframes light-glow-pulse {
-        0%, 100% { filter: drop-shadow(0 0 8px #1cb0f6) drop-shadow(0 0 20px #1cb0f6); opacity: 1; }
-        50% { filter: drop-shadow(0 0 15px #1cb0f6) drop-shadow(0 0 35px #1cb0f6); opacity: 0.9; }
+    .shield-svg {
+        width: 60px; height: 60px;
+        filter: drop-shadow(0 0 15px #1cb0f6);
     }
-
-    .shield-glass-container {
-        width: 90px; height: 90px;
-        margin-bottom: 25px;
-        position: relative; z-index: 2;
-        display: flex; justify-content: center; align-items: center;
-        
-        /* Hiệu ứng Glassmorphism */
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 50%;
-        backdrop-filter: blur(15px); /* Gaussian Blur cho nền */
-        -webkit-backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 
-            inset 0 0 20px rgba(255, 255, 255, 0.05),
-            0 10px 20px rgba(0,0,0,0.2);
-        
-        /* Động: Bay lên xuống */
-        animation: float-pulse 3s ease-in-out infinite;
-    }
-
-    .shield-glass-container::after {
-        content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-        pointer-events: none;
-    }
-
-    .shield-svg { width: 55px; height: 55px; }
-
-    .shield-body {
-        fill: rgba(28, 176, 246, 0.1);
-        stroke: rgba(28, 176, 246, 0.5);
-        stroke-width: 1.5;
-    }
-
-    .shield-light {
-        fill: #ffffff;
-        /* Gaussian Blur Glow mạnh mẽ */
-        animation: light-glow-pulse 2s ease-in-out infinite alternate;
-    }
-    /* --------------------------------------- */
 
     h1 {
-        color: #ffffff; font-size: 28px; margin: 0 0 10px 0; font-weight: 800; position: relative; z-index: 2;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        color: white; font-size: 26px; font-weight: 800; margin: 10px 0 5px;
+        text-align: center;
+    }
+    .subtitle {
+        color: #888; font-size: 16px; margin-bottom: 30px; font-weight: 600;
+        text-align: center;
     }
 
-    p.subtitle {
-        color: #aaaaaa; margin: 0 0 40px 0; font-size: 18px; font-weight: 700; position: relative; z-index: 2;
-    }
-
-    .glass-button {
-        position: relative; 
-        display: block;
+    .glass-btn {
         width: 100%;
+        padding: 20px;
         background: rgba(255, 255, 255, 0.05);
-        border-radius: 24px;
-        padding: 30px 15px;
-        text-decoration: none;
-        color: #ffffff;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        cursor: none;
-        z-index: 2; 
-        overflow: hidden; 
-        backdrop-filter: blur(15px); 
-        -webkit-backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        cursor: none;
+        transition: 0.3s;
+        text-align: center;
+        text-decoration: none;
+        display: flex; flex-direction: column; align-items: center;
     }
 
-    .glass-button:hover { 
-        background: rgba(255, 255, 255, 0.08);
+    .glass-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
         border-color: #1cb0f6;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 30px rgba(28, 176, 246, 0.2);
+        box-shadow: 0 10px 40px rgba(28, 176, 246, 0.15);
         transform: translateY(-5px);
     }
-    
-    .glass-button:active { transform: translateY(0) scale(0.98); }
 
-    .button-text {
-        display: flex; align-items: center; justify-content: center;
-        width: 100%; gap: 12px; white-space: nowrap;
-        font-size: 20px; font-weight: 900; text-transform: uppercase;
-        margin-bottom: 25px; letter-spacing: 1px; position: relative;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-        z-index: 200; color: #ffffff; line-height: 1;
+    .btn-header {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        font-size: 18px; font-weight: 900; color: white;
+        text-transform: uppercase; margin-bottom: 15px;
     }
 
-    .icon-money { font-size: 28px; display: flex; align-items: center; margin: 0; }
-
-    .qr-image {
-        width: 240px; height: 240px; border-radius: 18px;
-        background: rgba(255, 255, 255, 0.95);
-        padding: 15px; display: block; margin: 0 auto;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-        position: relative; z-index: 200;
+    .qr-img {
+        width: 220px; height: 220px;
+        border-radius: 15px;
+        background: rgba(255,255,255,0.9);
+        padding: 10px;
     }
+
 </style>
 </head>
 <body>
 
-    <div class="cursor-ring" id="cursorRing"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
+    <div id="cursor-layer">
+        <div class="cursor-ring" id="ring"></div>
+        <div class="cursor-dot" id="dot"></div>
+    </div>
 
     <div class="card-container">
+        
         <div class="card-inner">
-            
-            <div class="shield-glass-container">
+            <div class="shield-container">
                 <svg class="shield-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path class="shield-body" d="M12 2L4 5V11C4 16.55 7.16 21.74 12 23C16.84 21.74 20 16.55 20 11V5L12 2Z"/>
-                    <path class="shield-light" d="M12 6L13.76 10.24L18 12L13.76 13.76L12 18L10.24 13.76L6 12L10.24 10.24L12 6Z"/>
+                    <path d="M12 2L4 5V11C4 16.55 7.16 21.74 12 23C16.84 21.74 20 16.55 20 11V5L12 2Z" fill="rgba(28, 176, 246, 0.2)" stroke="#1cb0f6" stroke-width="2"/>
+                    <path d="M12 6L13.5 10.5L18 12L13.5 13.5L12 18L10.5 13.5L6 12L10.5 10.5L12 6Z" fill="white"/>
                 </svg>
             </div>
-            
+
             <h1>Ủng hộ Trần Đức Hiếu</h1>
             <p class="subtitle">Cảm ơn bạn đã đồng hành!</p>
 
-            <div class="glass-button" id="myButton">
-                <div class="button-text">
-                    <span class="icon-money">💵</span> Quét mã để Donate
+            <a href="#" class="glass-btn" id="donateBtn">
+                <div class="btn-header">
+                    <span>💵</span> Quét mã để Donate
                 </div>
-                <img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" alt="QR Code Trần Đức Hiếu" class="qr-image">
-            </div>
+                <img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" class="qr-img" alt="QR Code">
+            </a>
         </div>
     </div>
 
     <script>
-        const ring = document.getElementById('cursorRing');
-        const dot = document.getElementById('cursorDot');
-        const button = document.getElementById('myButton');
+        const ring = document.getElementById('ring');
+        const dot = document.getElementById('dot');
+        const btn = document.getElementById('donateBtn');
+
+        let mx = window.innerWidth / 2;
+        let my = window.innerHeight / 2;
         
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let ringX = mouseX;
-        let ringY = mouseY;
-        let dotX = mouseX;
-        let dotY = mouseY;
-
-        const delay = 0.15;
-        let isCursorVisible = false;
-
         document.addEventListener('mousemove', (e) => {
-            if (!isCursorVisible) {
-                ring.style.opacity = 1;
-                dot.style.opacity = 1;
-                isCursorVisible = true;
-                mouseX = e.clientX; mouseY = e.clientY;
-                ringX = mouseX; ringY = mouseY;
-                dotX = mouseX; dotY = mouseY;
-            } else {
-                mouseX = e.clientX; mouseY = e.clientY;
-            }
+            mx = e.clientX;
+            my = e.clientY;
+            
+            dot.style.left = mx + 'px';
+            dot.style.top = my + 'px';
+            
+            setTimeout(() => {
+                ring.style.left = mx + 'px';
+                ring.style.top = my + 'px';
+            }, 50);
         });
 
-        function animateCursor() {
-            if (isCursorVisible) {
-                ringX += (mouseX - ringX) * delay;
-                ringY += (mouseY - ringY) * delay;
-                dotX = mouseX;
-                dotY = mouseY;
-                
-                ring.style.left = ringX + 'px';
-                ring.style.top = ringY + 'px';
-                dot.style.left = dotX + 'px';
-                dot.style.top = dotY + 'px';
-            }
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
         document.addEventListener('mousedown', () => {
-            ring.style.width = '40px';
-            ring.style.height = '40px';
-            ring.style.backgroundColor = 'rgba(28, 176, 246, 0.3)';
+            ring.style.width = '35px';
+            ring.style.height = '35px';
+            ring.style.borderColor = 'white';
         });
 
         document.addEventListener('mouseup', () => {
-            ring.style.width = '60px';
-            ring.style.height = '60px';
-            ring.style.backgroundColor = 'transparent';
+            ring.style.width = '50px';
+            ring.style.height = '50px';
+            ring.style.borderColor = '#1cb0f6';
         });
 
-        button.addEventListener('mouseenter', () => {
+        btn.addEventListener('mouseenter', () => {
             ring.style.width = '80px';
             ring.style.height = '80px';
-            ring.style.borderColor = '#ffffff';
+            ring.style.backgroundColor = 'rgba(255,255,255,0.05)';
         });
-
-        button.addEventListener('mouseleave', () => {
-            ring.style.width = '60px';
-            ring.style.height = '60px';
-            ring.style.borderColor = '#1cb0f6';
+        
+        btn.addEventListener('mouseleave', () => {
+            ring.style.width = '50px';
+            ring.style.height = '50px';
+            ring.style.backgroundColor = 'transparent';
         });
     </script>
 
