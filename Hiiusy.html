@@ -20,15 +20,14 @@
         cursor: none;
     }
 
-    /* --- CẬP NHẬT: CON TRỎ DẠNG NHẪN (RỖNG GIỮA) --- */
+    /* CON TRỎ DẠNG NHẪN */
     .cursor-ring {
         position: fixed;
         top: 0; left: 0;
         width: 60px; 
         height: 60px;
-        border: 2px solid #1cb0f6; /* Viền sáng rõ */
+        border: 2px solid #1cb0f6;
         border-radius: 50%;
-        /* Hiệu ứng phát sáng tỏa ra ngoài, không che bên trong */
         box-shadow: 
             0 0 10px #1cb0f6,
             0 0 30px rgba(28, 176, 246, 0.4),
@@ -40,7 +39,6 @@
         mix-blend-mode: screen;
     }
 
-    /* Chấm nhỏ ở tâm để định vị chính xác */
     .cursor-dot {
         position: fixed;
         top: 0; left: 0;
@@ -48,7 +46,7 @@
         background-color: white;
         border-radius: 50%;
         pointer-events: none;
-        z-index: 10000; /* Nằm trên cả vòng nhẫn */
+        z-index: 10000;
         transform: translate(-50%, -50%);
         box-shadow: 0 0 10px white;
     }
@@ -58,18 +56,21 @@
         100% { transform: rotate(360deg); }
     }
 
+    /* THẺ CHÍNH */
     .card-container {
         position: relative;
         background: transparent;
-        border-radius: 30px;
+        border-radius: 30px; /* Bo góc của thẻ chính */
         padding: 4px;
         text-align: center;
         width: 380px; 
         box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
         z-index: 10;
-        overflow: hidden;
+        /* Quan trọng: Ẩn phần thừa của hình tròn sáng bên trong thẻ */
+        overflow: hidden; 
     }
 
+    /* LỚP VIỀN SÁNG XOAY TRÒN (ĐÃ SỬA) */
     .card-container::before {
         content: '';
         position: absolute;
@@ -81,11 +82,13 @@
             transparent 30%
         );
         animation: rotate-light 4s linear infinite;
+        /* --- SỬA LỖI TẠI ĐÂY --- */
+        border-radius: 50%; /* Biến hình vuông thành hình tròn */
     }
 
     .card-inner {
         background: #1a1a1a;
-        border-radius: 26px;
+        border-radius: 26px; /* Bo góc của nền trong, nhỏ hơn thẻ ngoài */
         padding: 45px 30px;
         height: 100%;
         position: relative;
@@ -106,7 +109,7 @@
         color: #aaaaaa; margin: 0 0 40px 0; font-size: 18px; font-weight: 700; position: relative; z-index: 2;
     }
 
-    /* --- NÂNG CẤP NÚT BẤM --- */
+    /* NÚT BẤM */
     .glass-button {
         position: relative; 
         display: block;
@@ -116,7 +119,7 @@
         text-decoration: none;
         color: #ffffff;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        cursor: none; /* Ẩn chuột khi vào nút để dùng vòng nhẫn */
+        cursor: none;
         z-index: 2; 
         overflow: hidden; 
         backdrop-filter: blur(15px); 
@@ -125,7 +128,6 @@
         box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
-    /* Hiệu ứng Hover đặc biệt: Nút nổi lên, Vòng nhẫn sẽ tương tác */
     .glass-button:hover { 
         background: rgba(255, 255, 255, 0.08);
         border-color: #1cb0f6;
@@ -137,13 +139,12 @@
     
     .glass-button:active { transform: translateY(0) scale(0.98); }
 
-    /* Đảm bảo chữ và ảnh nằm TRÊN con trỏ nếu lỡ con trỏ chạy qua */
     .button-text {
         display: flex; align-items: center; justify-content: center;
         font-size: 24px; font-weight: 900; text-transform: uppercase;
         margin-bottom: 25px; letter-spacing: 1.5px; position: relative;
         text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-        z-index: 200; /* Z-Index cực cao để không bị che */
+        z-index: 200;
         color: #ffffff;
     }
 
@@ -151,11 +152,11 @@
 
     .qr-image {
         width: 240px; height: 240px; border-radius: 18px;
-        background: rgba(255, 255, 255, 0.95); /* Nền trắng rõ hơn */
+        background: rgba(255, 255, 255, 0.95);
         padding: 15px; display: block; margin: 0 auto;
         box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
         position: relative; 
-        z-index: 200; /* Z-Index cực cao để không bị che */
+        z-index: 200;
     }
 </style>
 </head>
@@ -192,15 +193,11 @@
         
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
-        
-        // Vị trí của vòng nhẫn (đi trễ)
         let ringX = mouseX;
         let ringY = mouseY;
-        // Vị trí của chấm (đi ngay)
         let dotX = mouseX;
         let dotY = mouseY;
 
-        // Tốc độ đuổi theo
         const delay = 0.15;
 
         document.addEventListener('mousemove', (e) => {
@@ -209,17 +206,13 @@
         });
 
         function animateCursor() {
-            // Vòng nhẫn đi từ từ tạo cảm giác mượt
             ringX += (mouseX - ringX) * delay;
             ringY += (mouseY - ringY) * delay;
-            
-            // Chấm tâm đi ngay lập tức (nhanh)
             dotX = mouseX;
             dotY = mouseY;
             
             ring.style.left = ringX + 'px';
             ring.style.top = ringY + 'px';
-            
             dot.style.left = dotX + 'px';
             dot.style.top = dotY + 'px';
             
@@ -227,11 +220,10 @@
         }
         animateCursor();
 
-        // Hiệu ứng khi nhấn chuột: Vòng nhẫn co lại
         document.addEventListener('mousedown', () => {
             ring.style.width = '40px';
             ring.style.height = '40px';
-            ring.style.backgroundColor = 'rgba(28, 176, 246, 0.3)'; // Nháy sáng
+            ring.style.backgroundColor = 'rgba(28, 176, 246, 0.3)';
         });
 
         document.addEventListener('mouseup', () => {
@@ -240,12 +232,10 @@
             ring.style.backgroundColor = 'transparent';
         });
 
-        // Hiệu ứng thông minh: Khi vào vùng nút bấm, vòng nhẫn mở rộng ra để bao lấy nội dung
-        // Giúp nhìn rõ hơn
         button.addEventListener('mouseenter', () => {
             ring.style.width = '80px';
             ring.style.height = '80px';
-            ring.style.borderColor = '#ffffff'; // Đổi màu trắng cho nổi bật
+            ring.style.borderColor = '#ffffff';
         });
 
         button.addEventListener('mouseleave', () => {
