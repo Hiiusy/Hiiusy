@@ -16,12 +16,14 @@
         min-height: 100vh;
         margin: 0;
         padding: 20px;
-        overflow: hidden;
-        cursor: none;
+        overflow-y: auto; 
+        overflow-x: hidden;
+        cursor: none; 
     }
 
+    /* SỬA LỖI: Thêm opacity: 0 để ẩn lúc đầu & quay lại fixed */
     .cursor-ring {
-        position: fixed;
+        position: fixed; 
         top: 0; left: 0;
         width: 60px; 
         height: 60px;
@@ -31,15 +33,18 @@
             0 0 10px #1cb0f6,
             0 0 30px rgba(28, 176, 246, 0.4),
             inset 0 0 10px rgba(28, 176, 246, 0.2); 
-        pointer-events: none;
+        pointer-events: none; 
         z-index: 9999;
         transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s, background-color 0.2s;
+        transition: width 0.2s, height 0.2s, background-color 0.2s, opacity 0.3s;
         mix-blend-mode: screen;
+        will-change: transform;
+        opacity: 0; /* Ẩn mặc định */
     }
 
+    /* SỬA LỖI: Thêm opacity: 0 */
     .cursor-dot {
-        position: fixed;
+        position: fixed; 
         top: 0; left: 0;
         width: 8px; height: 8px;
         background-color: white;
@@ -48,6 +53,8 @@
         z-index: 10000;
         transform: translate(-50%, -50%);
         box-shadow: 0 0 10px white;
+        opacity: 0; /* Ẩn mặc định */
+        transition: opacity 0.3s;
     }
 
     @keyframes rotate-light {
@@ -66,6 +73,7 @@
         z-index: 10;
         overflow: hidden;
         transform: translateZ(0);
+        margin: 50px 0; 
     }
 
     .card-container::before {
@@ -73,142 +81,11 @@
         position: absolute;
         top: -100%; left: -100%; width: 300%; height: 300%;
         z-index: -2;
-        background: conic-gradient(
-            transparent, 
-            transparent,
-            transparent,
-            #1cb0f6
-        );
+        background: conic-gradient(transparent, transparent, transparent, #1cb0f6);
         animation: rotate-light 4s linear infinite;
     }
 
     .card-inner {
         background: #1a1a1a;
         border-radius: 26px;
-        padding: 45px 30px;
-        height: 100%;
-        position: relative;
-        z-index: -1;
-    }
-
-    .header-icon {
-        width: 60px; height: 60px; margin-bottom: 20px; position: relative; z-index: 2;
-        filter: drop-shadow(0 0 10px rgba(28, 176, 246, 0.8));
-    }
-    
-    h1 {
-        color: #ffffff; font-size: 28px; margin: 0 0 10px 0; font-weight: 800; position: relative; z-index: 2;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    p.subtitle {
-        color: #aaaaaa; margin: 0 0 40px 0; font-size: 18px; font-weight: 700; position: relative; z-index: 2;
-    }
-
-    .glass-button {
-        position: relative; 
-        display: block;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 24px;
-        padding: 30px 15px;
-        text-decoration: none;
-        color: #ffffff;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        cursor: none;
-        z-index: 2; 
-        overflow: hidden; 
-        backdrop-filter: blur(15px); 
-        -webkit-backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
-    }
-
-    .glass-button:hover { 
-        background: rgba(255, 255, 255, 0.08);
-        border-color: #1cb0f6;
-        box-shadow: 
-            0 15px 35px rgba(0,0,0,0.3),
-            0 0 30px rgba(28, 176, 246, 0.2);
-        transform: translateY(-5px);
-    }
-    
-    .glass-button:active { transform: translateY(0) scale(0.98); }
-
-    .button-text {
-        display: flex; 
-        align-items: center; 
-        justify-content: center;
-        width: 100%;
-        gap: 12px;
-        white-space: nowrap;
-        font-size: 20px;
-        font-weight: 900; 
-        text-transform: uppercase;
-        margin-bottom: 25px; 
-        letter-spacing: 1px; 
-        position: relative;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-        z-index: 200;
-        color: #ffffff;
-        line-height: 1;
-    }
-
-    .icon-money { 
-        font-size: 28px; 
-        display: flex;
-        align-items: center;
-        margin: 0;
-    }
-
-    .qr-image {
-        width: 240px; height: 240px; border-radius: 18px;
-        background: rgba(255, 255, 255, 0.95);
-        padding: 15px; display: block; margin: 0 auto;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-        position: relative; 
-        z-index: 200;
-    }
-</style>
-</head>
-<body>
-
-    <div class="cursor-ring" id="cursorRing"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
-
-    <div class="card-container">
-        <div class="card-inner">
-            <svg class="header-icon" viewBox="0 0 24 24" fill="#1cb0f6" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-3.8h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/>
-            </svg>
-            
-            <h1>Ủng hộ Trần Đức Hiếu</h1>
-            <p class="subtitle">Cảm ơn bạn đã đồng hành!</p>
-
-            <div class="glass-button" id="myButton">
-                <div class="button-text">
-                    <span class="icon-money">💵</span> Quét mã để Donate
-                </div>
-                
-                <img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" 
-                     alt="QR Code Trần Đức Hiếu" 
-                     class="qr-image">
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const ring = document.getElementById('cursorRing');
-        const dot = document.getElementById('cursorDot');
-        const button = document.getElementById('myButton');
-        
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let ringX = mouseX;
-        let ringY = mouseY;
-        let dotX = mouseX;
-        let dotY = mouseY;
-
-        const delay = 0.15;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX
+        padding: 45
