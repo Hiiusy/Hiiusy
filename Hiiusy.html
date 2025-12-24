@@ -31,21 +31,21 @@
 
     .cursor-ring {
         position: absolute;
-        width: 50px; height: 50px;
+        width: 30px; height: 30px; /* Kích thước nhỏ hơn */
         border: 2px solid #1cb0f6;
         border-radius: 50%;
         transform: translate(-50%, -50%);
         transition: width 0.1s, height 0.1s;
-        box-shadow: 0 0 15px rgba(28, 176, 246, 0.5);
+        box-shadow: 0 0 10px rgba(28, 176, 246, 0.5);
     }
 
     .cursor-dot {
         position: absolute;
-        width: 8px; height: 8px;
+        width: 6px; height: 6px; /* Chấm tâm cũng nhỏ hơn chút */
         background: white;
         border-radius: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 10px white;
+        box-shadow: 0 0 8px white;
     }
 
     @keyframes rotate-bg {
@@ -205,26 +205,26 @@
         });
 
         document.addEventListener('mousedown', () => {
-            ring.style.width = '35px';
-            ring.style.height = '35px';
+            ring.style.width = '20px';
+            ring.style.height = '20px';
             ring.style.borderColor = 'white';
         });
 
         document.addEventListener('mouseup', () => {
-            ring.style.width = '50px';
-            ring.style.height = '50px';
+            ring.style.width = '30px';
+            ring.style.height = '30px';
             ring.style.borderColor = '#1cb0f6';
         });
 
         btn.addEventListener('mouseenter', () => {
-            ring.style.width = '80px';
-            ring.style.height = '80px';
+            ring.style.width = '50px';
+            ring.style.height = '50px';
             ring.style.backgroundColor = 'rgba(255,255,255,0.05)';
         });
         
         btn.addEventListener('mouseleave', () => {
-            ring.style.width = '50px';
-            ring.style.height = '50px';
+            ring.style.width = '30px';
+            ring.style.height = '30px';
             ring.style.backgroundColor = 'transparent';
         });
     </script>
