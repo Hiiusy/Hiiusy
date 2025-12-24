@@ -20,7 +20,6 @@
         cursor: none;
     }
 
-    /* CON TRỎ DẠNG NHẪN */
     .cursor-ring {
         position: fixed;
         top: 0; left: 0;
@@ -56,39 +55,36 @@
         100% { transform: rotate(360deg); }
     }
 
-    /* THẺ CHÍNH */
     .card-container {
         position: relative;
         background: transparent;
-        border-radius: 30px; /* Bo góc của thẻ chính */
-        padding: 4px;
+        border-radius: 30px;
+        padding: 4px; /* Độ dày viền */
         text-align: center;
         width: 380px; 
         box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
         z-index: 10;
-        /* Quan trọng: Ẩn phần thừa của hình tròn sáng bên trong thẻ */
-        overflow: hidden; 
+        overflow: hidden;
+        transform: translateZ(0); /* Fix lỗi gãy góc trên trình duyệt */
     }
 
-    /* LỚP VIỀN SÁNG XOAY TRÒN (ĐÃ SỬA) */
     .card-container::before {
         content: '';
         position: absolute;
-        top: -50%; left: -50%; width: 200%; height: 200%;
+        top: -100%; left: -100%; width: 300%; height: 300%;
         z-index: -2;
         background: conic-gradient(
             transparent, 
-            rgba(28, 176, 246, 1), 
-            transparent 30%
+            transparent,
+            transparent,
+            #1cb0f6
         );
         animation: rotate-light 4s linear infinite;
-        /* --- SỬA LỖI TẠI ĐÂY --- */
-        border-radius: 50%; /* Biến hình vuông thành hình tròn */
     }
 
     .card-inner {
         background: #1a1a1a;
-        border-radius: 26px; /* Bo góc của nền trong, nhỏ hơn thẻ ngoài */
+        border-radius: 26px; /* 30px - 4px padding */
         padding: 45px 30px;
         height: 100%;
         position: relative;
@@ -109,7 +105,6 @@
         color: #aaaaaa; margin: 0 0 40px 0; font-size: 18px; font-weight: 700; position: relative; z-index: 2;
     }
 
-    /* NÚT BẤM */
     .glass-button {
         position: relative; 
         display: block;
