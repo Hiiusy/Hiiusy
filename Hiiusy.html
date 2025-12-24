@@ -18,50 +18,23 @@
         padding: 20px;
     }
 
+    /* Hiệu ứng xoay tròn */
     @keyframes rotate-light {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
 
+    /* --- THẺ CHÍNH --- */
     .card-container {
-        background: transparent;
-        position: relative;
+        background-color: #202f36; 
         border-radius: 20px;
         padding: 40px;
         text-align: center;
         width: 320px;
-        z-index: 1;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
 
-    .card-container::before {
-        content: '';
-        position: absolute;
-        z-index: -2;
-        top: -3px; right: -3px; bottom: -3px; left: -3px;
-        border-radius: 23px;
-        background: conic-gradient(
-            from 0deg, 
-            transparent 0%, 
-            #ffe600 10%, 
-            transparent 20%,
-            transparent 50%,
-            #ffe600 60%, 
-            transparent 70%,
-            transparent 100%
-        );
-        animation: rotate-light 4s linear infinite;
-    }
-
-    .card-container::after {
-        content: '';
-        position: absolute;
-        z-index: -1;
-        top: 0; right: 0; bottom: 0; left: 0;
-        background-color: #202f36;
-        border-radius: 20px;
-        box-shadow: inset 0 0 10px rgba(0,0,0,0.5); 
-    }
-
+    /* --- CÁC PHẦN TỬ TIÊU ĐỀ --- */
     .header-icon {
         width: 50px;
         height: 50px;
@@ -82,30 +55,60 @@
         font-weight: 700;
     }
 
+    /* --- NÚT BẤM CHỨA QR --- */
     .super-button {
+        position: relative; 
         display: block;
-        background-color: #ffe600; 
+        background: transparent; 
         border-radius: 16px;
         padding: 20px;
         text-decoration: none;
-        color: #202f36;
-        box-shadow: 0 6px 0 #b3a000; 
-        transition: all 0.1s ease;
-        position: relative;
+        color: #ffffff; /* Đổi màu chữ thành Trắng cho nổi trên nền Xanh */
+        transition: all 0.2s ease;
         top: 0;
         cursor: pointer;
+        z-index: 1; 
+        overflow: hidden; 
+    }
+
+    /* Lớp giả 1: Viền sáng xoay tròn */
+    .super-button::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        top: -4px; right: -4px; bottom: -4px; left: -4px;
+        /* Dải màu ánh sáng: Trắng + Xanh Dương */
+        background: conic-gradient(
+            from 0deg,
+            transparent 0%,
+            #ffffff 20%, /* Điểm sáng trắng */
+            #1cb0f6 30%, /* Điểm sáng Xanh Dương */
+            transparent 50%,
+            transparent 100%
+        );
+        animation: rotate-light 3s linear infinite;
+        border-radius: 20px; 
+    }
+
+    /* Lớp giả 2: Nền nút màu xanh */
+    .super-button::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background-color: #1cb0f6; /* Đổi nền nút thành Xanh Dương */
+        border-radius: 16px; 
     }
 
     .super-button:hover {
-        background-color: #ffea2e; 
         filter: brightness(1.1);
     }
 
     .super-button:active {
-        top: 6px; 
-        box-shadow: 0 0 0 #b3a000; 
+        transform: scale(0.98);
     }
 
+    /* --- NỘI DUNG --- */
     .button-text {
         display: flex;
         align-items: center;
@@ -115,6 +118,8 @@
         text-transform: uppercase;
         margin-bottom: 15px;
         letter-spacing: 0.8px;
+        position: relative;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Thêm bóng chữ nhẹ cho dễ đọc */
     }
 
     .icon-money {
@@ -130,14 +135,15 @@
         padding: 10px; 
         display: block;
         margin: 0 auto;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); 
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); 
+        position: relative; 
     }
 </style>
 </head>
 <body>
 
     <div class="card-container">
-        <svg class="header-icon" viewBox="0 0 24 24" fill="#ffe600" xmlns="http://www.w3.org/2000/svg">
+        <svg class="header-icon" viewBox="0 0 24 24" fill="#1cb0f6" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-3.8h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/>
         </svg>
         
@@ -149,7 +155,7 @@
                 <span class="icon-money">💵</span> Quét mã để Donate
             </div>
             
-            <img src="<a href="https://imgbb.com/"><img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" alt="mã qr môm" border="0"></a>" 
+            <img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" 
                  alt="QR Code Trần Đức Hiếu" 
                  class="qr-image">
         </div>
