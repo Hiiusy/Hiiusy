@@ -20,18 +20,24 @@
         cursor: default;
     }
 
+    /* --- [CẬP NHẬT] ĐỐM SÁNG --- */
     .cursor-glow {
         position: fixed;
         top: 0; left: 0;
-        width: 400px; 
-        height: 400px;
-        background: radial-gradient(circle, rgba(28, 176, 246, 0.15) 0%, rgba(28, 176, 246, 0) 70%);
+        /* Giảm kích thước xuống còn 150px */
+        width: 150px; 
+        height: 150px;
+        /* Ánh sáng tập trung hơn */
+        background: radial-gradient(circle, rgba(28, 176, 246, 0.4) 0%, rgba(28, 176, 246, 0) 70%);
         border-radius: 50%;
         pointer-events: none;
-        transform: translate(-50%, -50%);
         z-index: 9999;
         mix-blend-mode: screen;
-        transition: width 0.2s, height 0.2s;
+        /* Thêm transition mượt cho transform */
+        transition: width 0.1s, height 0.1s;
+        /* Quan trọng: đặt tâm biến hình ở giữa để xoay chuẩn */
+        transform-origin: center center;
+        will-change: transform, left, top;
     }
 
     @keyframes rotate-light {
@@ -179,18 +185,55 @@
 
     <script>
         const cursor = document.getElementById('cursorGlow');
+        
+        // Vị trí chuột hiện tại (mục tiêu)
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        
+        // Vị trí của đốm sáng (đi sau chuột một chút để tạo độ mượt)
+        let glowX = mouseX;
+        let glowY = mouseY;
+
+        // Cập nhật tọa độ khi di chuyển chuột
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
-        document.addEventListener('mousedown', () => {
-            cursor.style.width = '350px';
-            cursor.style.height = '350px';
-        });
-        document.addEventListener('mouseup', () => {
-            cursor.style.width = '400px';
-            cursor.style.height = '400px';
-        });
+
+        // Hàm chạy liên tục để tạo hiệu ứng động (Animation Loop)
+        function animate() {
+            // Tính khoảng cách giữa đốm sáng và chuột
+            let distX = mouseX - glowX;
+            let distY = mouseY - glowY;
+
+            // Di chuyển đốm sáng về phía chuột (hệ số 0.15 tạo độ trễ/mượt)
+            glowX += distX * 0.15;
+            glowY += distY * 0.15;
+
+            // Tính toán tốc độ di chuyển
+            let speed = Math.sqrt(distX * distX + distY * distY);
+            
+            // Tính góc xoay dựa trên hướng di chuyển
+            let angle = Math.atan2(distY, distX) * 180 / Math.PI;
+
+            // Tính độ giãn (Stretch): Tốc độ càng nhanh thì càng dài
+            // Giới hạn độ dài tối đa để không bị vỡ hình
+            let scaleX = 1 + Math.min(speed * 0.005, 0.8); 
+            // Khi dài ra thì bóp dẹt lại một chút cho giống giọt nước
+            let scaleY = 1 - Math.min(speed * 0.002, 0.4); 
+
+            // Áp dụng biến đổi CSS
+            cursor.style.left = glowX + 'px';
+            cursor.style.top = glowY + 'px';
+            
+            // Dịch chuyển tâm (-50%), Xoay theo góc (angle), và Co giãn (scale)
+            cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+
+            requestAnimationFrame(animate);
+        }
+
+        // Bắt đầu vòng lặp hiệu ứng
+        animate();
     </script>
 
 </body>
