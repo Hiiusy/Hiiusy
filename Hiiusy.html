@@ -1,19 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Trần Đức Hiếu</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; }
-        h1 { color: #58cc02; } /* Màu xanh Duolingo */
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate cho Trần Đức Hiếu</title>
+<style>
+  body {
+    font-family: 'DIN Next Rounded LT Pro', sans-serif; 
+    background-color: #121212; /* Nền tối */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+    .donate-container {
+    background-color: #202f36; 
+    color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    border: 2px solid #37464f;
+  }
+
+  .header {
+    margin-bottom: 25px;
+  }
+  .header h1 {
+    margin: 10px 0 5px 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .header p {
+    color: #6f838d; 
+    margin: 0;
+    font-weight: 500;
+  }
+
+ nhưng phóng to ra */
+  .qr-button-frame {
+       background: linear-gradient(to bottom, #ffe600, #e6ce00);
+       box-shadow: 0 6px 0 #b3a000;
+    color: #202f36;     
+    border-radius: 16px; /* Bo tròn góc */
+    padding: 20px;
+    display: inline-block;
+    /* Hiệu ứng động khi di chuột vào */
+    transition: transform 0.1s, box-shadow 0.1s;
+    cursor: pointer; /* Con trỏ tay */
+  }
+
+   .qr-button-frame:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #b3a000;
+  }
+
+  .qr-title {
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qr-title::before {
+    content: '💵';
+    margin-right: 8px;
+    font-size: 22px;
+  }
+
+  .qr-image {
+    width: 180px; 
+    height: 180px;
+    border-radius: 10px;
+    border: 3px solid #202f36; 
+    background-color: white;     padding: 5px;
+    display: block; 
+    margin: 0 auto; 
+  }
+</style>
 </head>
 <body>
-    <div class="card">
-        <h1>Xin chào, tôi là Trần Đức Hiếu!</h1>
-        <p>Cảm ơn bạn đã ghé thăm trang cá nhân của tôi.</p>
-        <p>Chúc bạn học tốt trên Duolingo!</p>
+
+  <div class="donate-container">
+    <div class="header">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffe600"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-3.8h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+      <h1>Ủng hộ Trần Đức Hiếu</h1>
+      <p>Cảm ơn bạn đã đồng hành!</p>
     </div>
+
+    <div class="qr-button-frame">
+      <div class="qr-title">Quét Mã Để Donate</div>
+      <img src="<a href="https://imgbb.com/"><img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" alt="mã qr môm" border="0"></a>" alt="Quét mã QR dự án Nui Toi" class="qr-image">
+    </div>
+
+  </div>
+
 </body>
 </html>
