@@ -3,104 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Donate cho Trần Đức Hiếu</title>
+<title>Ủng hộ Trần Đức Hiếu</title>
 <style>
-  body {
-    font-family: 'DIN Next Rounded LT Pro', sans-serif; 
-    background-color: #121212; /* Nền tối */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-  }
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
 
-    .donate-container {
-    background-color: #202f36; 
-    color: #fff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    border: 2px solid #37464f;
-  }
+    body {
+        font-family: 'Nunito', sans-serif;
+        background-color: #121212;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
 
-  .header {
-    margin-bottom: 25px;
-  }
-  .header h1 {
-    margin: 10px 0 5px 0;
-    font-size: 24px;
-    font-weight: 700;
-  }
-  .header p {
-    color: #6f838d; 
-    margin: 0;
-    font-weight: 500;
-  }
+    @keyframes rotate-light {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
- nhưng phóng to ra */
-  .qr-button-frame {
-       background: linear-gradient(to bottom, #ffe600, #e6ce00);
-       box-shadow: 0 6px 0 #b3a000;
-    color: #202f36;     
-    border-radius: 16px; /* Bo tròn góc */
-    padding: 20px;
-    display: inline-block;
-    /* Hiệu ứng động khi di chuột vào */
-    transition: transform 0.1s, box-shadow 0.1s;
-    cursor: pointer; /* Con trỏ tay */
-  }
+    .card-container {
+        background: transparent;
+        position: relative;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        width: 320px;
+        z-index: 1;
+    }
 
-   .qr-button-frame:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #b3a000;
-  }
+    .card-container::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        top: -3px; right: -3px; bottom: -3px; left: -3px;
+        border-radius: 23px;
+        background: conic-gradient(
+            from 0deg, 
+            transparent 0%, 
+            #ffe600 10%, 
+            transparent 20%,
+            transparent 50%,
+            #ffe600 60%, 
+            transparent 70%,
+            transparent 100%
+        );
+        animation: rotate-light 4s linear infinite;
+    }
 
-  .qr-title {
-    font-weight: 800;
-    font-size: 18px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .qr-title::before {
-    content: '💵';
-    margin-right: 8px;
-    font-size: 22px;
-  }
+    .card-container::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background-color: #202f36;
+        border-radius: 20px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.5); 
+    }
 
-  .qr-image {
-    width: 180px; 
-    height: 180px;
-    border-radius: 10px;
-    border: 3px solid #202f36; 
-    background-color: white;     padding: 5px;
-    display: block; 
-    margin: 0 auto; 
-  }
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+    
+    h1 {
+        color: #ffffff;
+        font-size: 24px;
+        margin: 0 0 5px 0;
+        font-weight: 800;
+    }
+
+    p.subtitle {
+        color: #777777;
+        margin: 0 0 30px 0;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .super-button {
+        display: block;
+        background-color: #ffe600; 
+        border-radius: 16px;
+        padding: 20px;
+        text-decoration: none;
+        color: #202f36;
+        box-shadow: 0 6px 0 #b3a000; 
+        transition: all 0.1s ease;
+        position: relative;
+        top: 0;
+        cursor: pointer;
+    }
+
+    .super-button:hover {
+        background-color: #ffea2e; 
+        filter: brightness(1.1);
+    }
+
+    .super-button:active {
+        top: 6px; 
+        box-shadow: 0 0 0 #b3a000; 
+    }
+
+    .button-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        letter-spacing: 0.8px;
+    }
+
+    .icon-money {
+        margin-right: 8px;
+        font-size: 20px;
+    }
+
+    .qr-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 12px;
+        background: white; 
+        padding: 10px; 
+        display: block;
+        margin: 0 auto;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); 
+    }
 </style>
 </head>
 <body>
 
-  <div class="donate-container">
-    <div class="header">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="#ffe600"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-3.8h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
-      <h1>Ủng hộ Trần Đức Hiếu</h1>
-      <p>Cảm ơn bạn đã đồng hành!</p>
-    </div>
+    <div class="card-container">
+        <svg class="header-icon" viewBox="0 0 24 24" fill="#ffe600" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-3.8h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/>
+        </svg>
+        
+        <h1>Ủng hộ Trần Đức Hiếu</h1>
+        <p class="subtitle">Cảm ơn bạn đã đồng hành!</p>
 
-    <div class="qr-button-frame">
-      <div class="qr-title">Quét Mã Để Donate</div>
-      <img src="<a href="https://imgbb.com/"><img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" alt="mã qr môm" border="0"></a>" alt="Quét mã QR dự án Nui Toi" class="qr-image">
+        <div class="super-button">
+            <div class="button-text">
+                <span class="icon-money">💵</span> Quét mã để Donate
+            </div>
+            
+            <img src="<a href="https://imgbb.com/"><img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" alt="mã qr môm" border="0"></a>" 
+                 alt="QR Code Trần Đức Hiếu" 
+                 class="qr-image">
+        </div>
     </div>
-
-  </div>
 
 </body>
 </html>
