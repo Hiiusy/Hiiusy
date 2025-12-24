@@ -17,7 +17,7 @@
         margin: 0;
         padding: 20px;
         overflow-x: hidden;
-        cursor: none; /* Ẩn chuột hệ thống */
+        cursor: none;
     }
 
     #cursor-layer {
@@ -29,10 +29,9 @@
         overflow: hidden;
     }
 
-    /* Vòng sáng to hơn và không có chấm tâm */
     .cursor-ring {
         position: absolute;
-        width: 50px; height: 50px; /* Đã tăng kích thước */
+        width: 50px; height: 50px;
         border: 2px solid #1cb0f6;
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -41,6 +40,20 @@
         box-shadow: 
             0 0 15px rgba(28, 176, 246, 0.6),
             inset 0 0 10px rgba(28, 176, 246, 0.2);
+    }
+
+    .cursor-dot {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px; height: 20px;
+        color: white;
+        font-weight: 900;
+        font-size: 14px;
+        transform: translate(-50%, -50%);
+        text-shadow: 0 0 8px #1cb0f6;
+        user-select: none;
     }
 
     @keyframes rotate-bg {
@@ -183,6 +196,7 @@
 
     <div id="cursor-layer">
         <div class="cursor-ring" id="ring"></div>
+        <div class="cursor-dot" id="dot">H</div>
     </div>
 
     <div class="card-container">
@@ -208,6 +222,7 @@
 
     <script>
         const ring = document.getElementById('ring');
+        const dot = document.getElementById('dot');
         const btn = document.getElementById('donateBtn');
 
         let mx = window.innerWidth / 2;
@@ -217,7 +232,9 @@
             mx = e.clientX;
             my = e.clientY;
             
-            // Di chuyển vòng tròn trễ hơn một chút để tạo độ mượt
+            dot.style.left = mx + 'px';
+            dot.style.top = my + 'px';
+            
             setTimeout(() => {
                 ring.style.left = mx + 'px';
                 ring.style.top = my + 'px';
@@ -237,7 +254,7 @@
         });
 
         btn.addEventListener('mouseenter', () => {
-            ring.style.width = '90px'; /* Phóng to hơn nữa khi vào nút */
+            ring.style.width = '90px';
             ring.style.height = '90px';
             ring.style.backgroundColor = 'rgba(255,255,255,0.02)';
         });
