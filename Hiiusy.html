@@ -31,7 +31,7 @@
 
     .cursor-ring {
         position: absolute;
-        width: 30px; height: 30px; /* Kích thước nhỏ hơn */
+        width: 30px; height: 30px;
         border: 2px solid #1cb0f6;
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -41,7 +41,7 @@
 
     .cursor-dot {
         position: absolute;
-        width: 6px; height: 6px; /* Chấm tâm cũng nhỏ hơn chút */
+        width: 6px; height: 6px;
         background: white;
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -120,17 +120,45 @@
         text-align: center;
     }
 
+    @keyframes glare-move {
+        0% { left: -100%; }
+        100% { left: 200%; }
+    }
+
     .glass-btn {
         width: 100%;
-        padding: 20px;
+        padding: 30px 20px 60px 20px; /* Tăng padding-bottom để khung dài hơn */
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
+        border-radius: 24px;
         cursor: none;
         transition: 0.3s;
         text-align: center;
         text-decoration: none;
         display: flex; flex-direction: column; align-items: center;
+        position: relative;
+        overflow: hidden; /* Để cắt phần lóa sáng thừa */
+    }
+
+    /* Hiệu ứng lóa sáng */
+    .glass-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.1) 40%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.1) 60%,
+            transparent
+        );
+        transform: skewX(-20deg);
+        animation: glare-move 3s infinite linear;
+        pointer-events: none;
     }
 
     .glass-btn:hover {
@@ -142,15 +170,17 @@
 
     .btn-header {
         display: flex; align-items: center; justify-content: center; gap: 10px;
-        font-size: 18px; font-weight: 900; color: white;
-        text-transform: uppercase; margin-bottom: 15px;
+        font-size: 20px; font-weight: 900; color: white;
+        text-transform: uppercase; margin-bottom: 20px;
     }
 
     .qr-img {
-        width: 220px; height: 220px;
-        border-radius: 15px;
+        width: 240px; height: 240px;
+        border-radius: 18px;
         background: rgba(255,255,255,0.9);
-        padding: 10px;
+        padding: 15px;
+        position: relative;
+        z-index: 2;
     }
 
 </style>
