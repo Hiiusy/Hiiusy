@@ -9,7 +9,7 @@
 
     body {
         font-family: 'Nunito', sans-serif;
-        background-color: #121212;
+        background-color: #0a0a0a;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -20,24 +20,13 @@
         cursor: default;
     }
 
-    /* --- [CẬP NHẬT] ĐỐM SÁNG --- */
-    .cursor-glow {
+    #trail-canvas {
         position: fixed;
         top: 0; left: 0;
-        /* Giảm kích thước xuống còn 150px */
-        width: 150px; 
-        height: 150px;
-        /* Ánh sáng tập trung hơn */
-        background: radial-gradient(circle, rgba(28, 176, 246, 0.4) 0%, rgba(28, 176, 246, 0) 70%);
-        border-radius: 50%;
+        width: 100%; height: 100%;
         pointer-events: none;
         z-index: 9999;
         mix-blend-mode: screen;
-        /* Thêm transition mượt cho transform */
-        transition: width 0.1s, height 0.1s;
-        /* Quan trọng: đặt tâm biến hình ở giữa để xoay chuẩn */
-        transform-origin: center center;
-        will-change: transform, left, top;
     }
 
     @keyframes rotate-light {
@@ -48,193 +37,102 @@
     .card-container {
         position: relative;
         background: transparent;
-        border-radius: 20px;
-        padding: 40px;
+        border-radius: 24px;
+        padding: 4px;
         text-align: center;
-        width: 320px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        width: 340px;
+        box-shadow: 0 30px 60px rgba(28, 176, 246, 0.2);
         z-index: 10;
         overflow: hidden;
-        backdrop-filter: blur(5px);
     }
 
     .card-container::before {
         content: '';
         position: absolute;
+        top: -50%; left: -50%; width: 200%; height: 200%;
         z-index: -2;
-        top: -4px; right: -4px; bottom: -4px; left: -4px;
         background: conic-gradient(
-            from 0deg,
-            transparent 0%,
-            #ffffff 10%, 
-            #1cb0f6 25%, 
-            transparent 45%,
-            transparent 100%
+            transparent, 
+            rgba(28, 176, 246, 0.8), 
+            transparent 30%
         );
-        animation: rotate-light 5s linear infinite;
-        border-radius: 24px;
+        animation: rotate-light 4s linear infinite;
     }
 
-    .card-container::after {
-        content: '';
-        position: absolute;
+    .card-inner {
+        background: #1a1a1a;
+        border-radius: 20px;
+        padding: 40px;
+        height: 100%;
+        position: relative;
         z-index: -1;
-        top: 0; right: 0; bottom: 0; left: 0;
-        background-color: #202f36;
-        border-radius: 20px; 
     }
 
     .header-icon {
-        width: 50px; height: 50px; margin-bottom: 10px; position: relative; z-index: 2;
-        filter: drop-shadow(0 0 5px rgba(28, 176, 246, 0.5));
+        width: 50px; height: 50px; margin-bottom: 15px; position: relative; z-index: 2;
+        filter: drop-shadow(0 0 8px rgba(28, 176, 246, 0.8));
     }
     
     h1 {
-        color: #ffffff; font-size: 24px; margin: 0 0 5px 0; font-weight: 800; position: relative; z-index: 2;
+        color: #ffffff; font-size: 26px; margin: 0 0 8px 0; font-weight: 800; position: relative; z-index: 2;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
     p.subtitle {
-        color: #777777; margin: 0 0 30px 0; font-size: 15px; font-weight: 700; position: relative; z-index: 2;
+        color: #aaaaaa; margin: 0 0 35px 0; font-size: 16px; font-weight: 700; position: relative; z-index: 2;
     }
 
-    .super-button {
+    .glass-button {
         position: relative; 
         display: block;
         background: rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
-        padding: 20px;
+        border-radius: 18px;
+        padding: 25px;
         text-decoration: none;
         color: #ffffff;
-        transition: all 0.2s ease;
-        top: 0;
+        transition: all 0.3s ease;
         cursor: pointer;
         z-index: 2; 
         overflow: hidden; 
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15px); 
+        -webkit-backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 
+            inset 0 0 20px rgba(255, 255, 255, 0.05),
+            0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .super-button::before {
-        content: ''; position: absolute; z-index: -2;
-        top: -50%; left: -50%; width: 200%; height: 200%;
-        background: conic-gradient(
-            from 0deg, transparent 0%, #ffffff 10%, #1cb0f6 30%, transparent 50%, transparent 100%
-        );
-        animation: rotate-light 3s linear infinite; 
-    }
-
-    .super-button::after {
-        content: ''; position: absolute; z-index: -1;
-        top: 2px; right: 2px; bottom: 2px; left: 2px;
-        background: rgba(28, 176, 246, 0.15);
-        border-radius: 14px;
-        backdrop-filter: blur(20px);
-    }
-
-    .super-button:hover { 
+    .glass-button:hover { 
         background: rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 15px rgba(28, 176, 246, 0.4);
-        border-color: rgba(255, 255, 255, 0.3);
+        border-color: rgba(28, 176, 246, 0.4);
+        box-shadow: 
+            inset 0 0 20px rgba(255, 255, 255, 0.1),
+            0 0 20px rgba(28, 176, 246, 0.3);
+        transform: translateY(-2px);
     }
     
-    .super-button:active { transform: scale(0.98); }
+    .glass-button:active { transform: translateY(2px) scale(0.98); }
 
     .button-text {
         display: flex; align-items: center; justify-content: center;
         font-size: 18px; font-weight: 800; text-transform: uppercase;
-        margin-bottom: 15px; letter-spacing: 0.8px; position: relative;
+        margin-bottom: 20px; letter-spacing: 1px; position: relative;
         text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         z-index: 3;
+        color: #e0e0e0;
     }
 
-    .icon-money { margin-right: 8px; font-size: 20px; }
+    .icon-money { margin-right: 10px; font-size: 22px; }
 
     .qr-image {
-        width: 200px; height: 200px; border-radius: 12px;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px; display: block; margin: 0 auto;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        width: 200px; height: 200px; border-radius: 14px;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 12px; display: block; margin: 0 auto;
+        box-shadow: inset 0 4px 10px rgba(0,0,0,0.1); 
         position: relative; z-index: 3;
+        backdrop-filter: blur(5px);
     }
 </style>
-</head>
-<body>
-
-    <div class="cursor-glow" id="cursorGlow"></div>
-
-    <div class="card-container">
-        <svg class="header-icon" viewBox="0 0 24 24" fill="#1cb0f6" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2v4c0 1.1.9 2 2 2h4v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V19h4c1.1 0 2-.9 2-2v-3.8h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/>
-        </svg>
-        
-        <h1>Ủng hộ Trần Đức Hiếu</h1>
-        <p class="subtitle">Cảm ơn bạn đã đồng hành!</p>
-
-        <div class="super-button">
-            <div class="button-text">
-                <span class="icon-money">💵</span> Quét mã để Donate
-            </div>
-            
-            <img src="https://i.ibb.co/ymbkK3nG/m-qr-m-m.png" 
-                 alt="QR Code Trần Đức Hiếu" 
-                 class="qr-image">
-        </div>
-    </div>
-
-    <script>
-        const cursor = document.getElementById('cursorGlow');
-        
-        // Vị trí chuột hiện tại (mục tiêu)
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        
-        // Vị trí của đốm sáng (đi sau chuột một chút để tạo độ mượt)
-        let glowX = mouseX;
-        let glowY = mouseY;
-
-        // Cập nhật tọa độ khi di chuyển chuột
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        // Hàm chạy liên tục để tạo hiệu ứng động (Animation Loop)
-        function animate() {
-            // Tính khoảng cách giữa đốm sáng và chuột
-            let distX = mouseX - glowX;
-            let distY = mouseY - glowY;
-
-            // Di chuyển đốm sáng về phía chuột (hệ số 0.15 tạo độ trễ/mượt)
-            glowX += distX * 0.15;
-            glowY += distY * 0.15;
-
-            // Tính toán tốc độ di chuyển
-            let speed = Math.sqrt(distX * distX + distY * distY);
-            
-            // Tính góc xoay dựa trên hướng di chuyển
-            let angle = Math.atan2(distY, distX) * 180 / Math.PI;
-
-            // Tính độ giãn (Stretch): Tốc độ càng nhanh thì càng dài
-            // Giới hạn độ dài tối đa để không bị vỡ hình
-            let scaleX = 1 + Math.min(speed * 0.005, 0.8); 
-            // Khi dài ra thì bóp dẹt lại một chút cho giống giọt nước
-            let scaleY = 1 - Math.min(speed * 0.002, 0.4); 
-
-            // Áp dụng biến đổi CSS
-            cursor.style.left = glowX + 'px';
-            cursor.style.top = glowY + 'px';
-            
-            // Dịch chuyển tâm (-50%), Xoay theo góc (angle), và Co giãn (scale)
-            cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
-
-            requestAnimationFrame(animate);
-        }
-
-        // Bắt đầu vòng lặp hiệu ứng
-        animate();
-    </script>
-
-</body>
-</html>
