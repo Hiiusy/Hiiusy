@@ -20,25 +20,37 @@
         cursor: none;
     }
 
-    .cursor-glow {
+    /* --- CẬP NHẬT: CON TRỎ DẠNG NHẪN (RỖNG GIỮA) --- */
+    .cursor-ring {
         position: fixed;
         top: 0; left: 0;
-        width: 150px; 
-        height: 150px;
+        width: 60px; 
+        height: 60px;
+        border: 2px solid #1cb0f6; /* Viền sáng rõ */
         border-radius: 50%;
-        background: radial-gradient(
-            circle, 
-            rgba(28, 176, 246, 0.6) 0%, 
-            rgba(28, 176, 246, 0.1) 50%, 
-            transparent 80%
-        );
+        /* Hiệu ứng phát sáng tỏa ra ngoài, không che bên trong */
+        box-shadow: 
+            0 0 10px #1cb0f6,
+            0 0 30px rgba(28, 176, 246, 0.4),
+            inset 0 0 10px rgba(28, 176, 246, 0.2); 
         pointer-events: none;
-        mix-blend-mode: screen;
         z-index: 9999;
         transform: translate(-50%, -50%);
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        transition: width 0.2s ease, height 0.2s ease;
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+        mix-blend-mode: screen;
+    }
+
+    /* Chấm nhỏ ở tâm để định vị chính xác */
+    .cursor-dot {
+        position: fixed;
+        top: 0; left: 0;
+        width: 8px; height: 8px;
+        background-color: white;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000; /* Nằm trên cả vòng nhẫn */
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px white;
     }
 
     @keyframes rotate-light {
@@ -94,6 +106,7 @@
         color: #aaaaaa; margin: 0 0 40px 0; font-size: 18px; font-weight: 700; position: relative; z-index: 2;
     }
 
+    /* --- NÂNG CẤP NÚT BẤM --- */
     .glass-button {
         position: relative; 
         display: block;
@@ -102,64 +115,54 @@
         padding: 35px 20px; 
         text-decoration: none;
         color: #ffffff;
-        transition: all 0.3s ease;
-        cursor: pointer; 
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: none; /* Ẩn chuột khi vào nút để dùng vòng nhẫn */
         z-index: 2; 
         overflow: hidden; 
         backdrop-filter: blur(15px); 
         -webkit-backdrop-filter: blur(15px);
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
-        border-right: 1px solid rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 
-            inset 0 0 20px rgba(255, 255, 255, 0.05),
-            0 10px 20px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
+    /* Hiệu ứng Hover đặc biệt: Nút nổi lên, Vòng nhẫn sẽ tương tác */
     .glass-button:hover { 
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(28, 176, 246, 0.5);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: #1cb0f6;
         box-shadow: 
-            inset 0 0 30px rgba(255, 255, 255, 0.1),
-            0 0 30px rgba(28, 176, 246, 0.4);
-        transform: translateY(-4px) scale(1.02);
+            0 15px 35px rgba(0,0,0,0.3),
+            0 0 30px rgba(28, 176, 246, 0.2);
+        transform: translateY(-5px);
     }
     
-    .glass-button:active { transform: translateY(2px) scale(0.98); }
+    .glass-button:active { transform: translateY(0) scale(0.98); }
 
+    /* Đảm bảo chữ và ảnh nằm TRÊN con trỏ nếu lỡ con trỏ chạy qua */
     .button-text {
         display: flex; align-items: center; justify-content: center;
-        font-size: 24px; 
-        font-weight: 900; 
-        text-transform: uppercase;
-        margin-bottom: 25px; 
-        letter-spacing: 1.5px; 
-        position: relative;
+        font-size: 24px; font-weight: 900; text-transform: uppercase;
+        margin-bottom: 25px; letter-spacing: 1.5px; position: relative;
         text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-        z-index: 3;
+        z-index: 200; /* Z-Index cực cao để không bị che */
         color: #ffffff;
     }
 
     .icon-money { margin-right: 12px; font-size: 30px; }
 
     .qr-image {
-        width: 240px; 
-        height: 240px; 
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 15px; 
-        display: block; 
-        margin: 0 auto;
-        box-shadow: inset 0 4px 15px rgba(0,0,0,0.15); 
-        position: relative; z-index: 3;
-        backdrop-filter: blur(5px);
+        width: 240px; height: 240px; border-radius: 18px;
+        background: rgba(255, 255, 255, 0.95); /* Nền trắng rõ hơn */
+        padding: 15px; display: block; margin: 0 auto;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+        position: relative; 
+        z-index: 200; /* Z-Index cực cao để không bị che */
     }
 </style>
 </head>
 <body>
 
-    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
 
     <div class="card-container">
         <div class="card-inner">
@@ -170,7 +173,7 @@
             <h1>Ủng hộ Trần Đức Hiếu</h1>
             <p class="subtitle">Cảm ơn bạn đã đồng hành!</p>
 
-            <div class="glass-button">
+            <div class="glass-button" id="myButton">
                 <div class="button-text">
                     <span class="icon-money">💵</span> Quét mã để Donate
                 </div>
@@ -183,15 +186,22 @@
     </div>
 
     <script>
-        const cursor = document.getElementById('cursorGlow');
+        const ring = document.getElementById('cursorRing');
+        const dot = document.getElementById('cursorDot');
+        const button = document.getElementById('myButton');
         
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
         
-        let cursorX = mouseX;
-        let cursorY = mouseY;
+        // Vị trí của vòng nhẫn (đi trễ)
+        let ringX = mouseX;
+        let ringY = mouseY;
+        // Vị trí của chấm (đi ngay)
+        let dotX = mouseX;
+        let dotY = mouseY;
 
-        const delay = 0.12;
+        // Tốc độ đuổi theo
+        const delay = 0.15;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
@@ -199,24 +209,49 @@
         });
 
         function animateCursor() {
-            cursorX += (mouseX - cursorX) * delay;
-            cursorY += (mouseY - cursorY) * delay;
+            // Vòng nhẫn đi từ từ tạo cảm giác mượt
+            ringX += (mouseX - ringX) * delay;
+            ringY += (mouseY - ringY) * delay;
             
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
+            // Chấm tâm đi ngay lập tức (nhanh)
+            dotX = mouseX;
+            dotY = mouseY;
+            
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            
+            dot.style.left = dotX + 'px';
+            dot.style.top = dotY + 'px';
             
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
+        // Hiệu ứng khi nhấn chuột: Vòng nhẫn co lại
         document.addEventListener('mousedown', () => {
-            cursor.style.width = '100px';
-            cursor.style.height = '100px';
+            ring.style.width = '40px';
+            ring.style.height = '40px';
+            ring.style.backgroundColor = 'rgba(28, 176, 246, 0.3)'; // Nháy sáng
         });
 
         document.addEventListener('mouseup', () => {
-            cursor.style.width = '150px';
-            cursor.style.height = '150px';
+            ring.style.width = '60px';
+            ring.style.height = '60px';
+            ring.style.backgroundColor = 'transparent';
+        });
+
+        // Hiệu ứng thông minh: Khi vào vùng nút bấm, vòng nhẫn mở rộng ra để bao lấy nội dung
+        // Giúp nhìn rõ hơn
+        button.addEventListener('mouseenter', () => {
+            ring.style.width = '80px';
+            ring.style.height = '80px';
+            ring.style.borderColor = '#ffffff'; // Đổi màu trắng cho nổi bật
+        });
+
+        button.addEventListener('mouseleave', () => {
+            ring.style.width = '60px';
+            ring.style.height = '60px';
+            ring.style.borderColor = '#1cb0f6';
         });
     </script>
 
